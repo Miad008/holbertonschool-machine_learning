@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Poisson distribution module."""
+"""Poisson distribution module"""
 
 
 class Poisson:
-    """Represents a Poisson distribution."""
+    """Represents a Poisson distribution"""
 
     def __init__(self, data=None, lambtha=1.):
-        """Initialize a Poisson distribution."""
+        """Initialize a Poisson distribution"""
         if data is None:
             if lambtha <= 0:
                 raise ValueError("lambtha must be a positive value")
@@ -20,23 +20,42 @@ class Poisson:
 
     def pmf(self, k):
         """
-        Calculate the PMF for a given number of successes.
+        Calculates the PMF for a given number of successes.
 
         Args:
             k: number of successes
 
         Returns:
-            The PMF value for k
+            PMF value for k
         """
         k = int(k)
-
         if k < 0:
             return 0
 
         e = 2.7182818285
-        factorial = 1
 
+        factorial = 1
         for i in range(1, k + 1):
             factorial *= i
 
-        return ((e ** (-self.lambtha)) * (self.lambtha ** k)) / factorial
+        return (e ** (-self.lambtha)) * (self.lambtha ** k) / factorial
+
+    def cdf(self, k):
+        """
+        Calculates the CDF for a given number of successes.
+
+        Args:
+            k: number of successes
+
+        Returns:
+            CDF value for k
+        """
+        k = int(k)
+        if k < 0:
+            return 0
+
+        cdf = 0
+        for i in range(k + 1):
+            cdf += self.pmf(i)
+
+        return cdf
