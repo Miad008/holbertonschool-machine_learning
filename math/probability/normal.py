@@ -25,11 +25,15 @@ class Normal:
                 raise TypeError("data must be a list")
 
             if len(data) < 2:
-                raise ValueError("data must contain multiple values")
+                raise ValueError(
+                    "data must contain multiple values"
+                )
 
             self.mean = sum(data) / len(data)
 
-            variance = sum((x - self.mean) ** 2 for x in data) / len(data)
+            variance = sum(
+                (x - self.mean) ** 2 for x in data
+            ) / len(data)
 
             self.stddev = variance ** 0.5
 
@@ -44,6 +48,12 @@ class Normal:
     def pdf(self, x):
         """Calculates the PDF for a given x-value"""
 
-        exponent = -((x - self.mean) ** 2) / (2 * (self.stddev ** 2))
+        exponent = -((x - self.mean) ** 2) / (
+            2 * (self.stddev ** 2)
+        )
 
-        return (1 / (self.stddev * ((2 * self.pi) ** 0.5))) * (self.e ** exponent)
+        coefficient = 1 / (
+            self.stddev * ((2 * self.pi) ** 0.5)
+        )
+
+        return coefficient * (self.e ** exponent)
